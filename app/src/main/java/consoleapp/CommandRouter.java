@@ -2,6 +2,7 @@ package consoleapp;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,11 +14,15 @@ final class CommandRouter {
     /**
      * In order for Dagger to know how to create a CommandRouter,
      * we also need to add an @Inject annotation to its constructor:
+     * Dagger also will create instanse of HelloWorldCommand
      */
-    @Inject
-    CommandRouter() {}
+    private final Map<String, Command> commands =  new HashMap<>();
 
-    private final Map<String, Command> commands = Collections.emptyMap();
+    @Inject
+    CommandRouter(Command command) {
+        System.out.println("Настя в CommandRouter()");
+        commands.put(helloWorldCommand.key(), helloWorldCommand);
+    }
 
     Command.Status route(String input) {
         List<String> splitInput = split(input);
