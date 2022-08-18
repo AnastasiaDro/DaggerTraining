@@ -3,6 +3,10 @@ package consoleapp;
 import dagger.Binds;
 import dagger.Module;
 
+/**
+ * Modules are collections of binding methods
+ * Unlike @Inject, which goes directly on a class’s constructor, @Binds methods must be inside a module.
+ */
 @Module
 abstract class HelloWorldModule {
 
@@ -14,6 +18,9 @@ abstract class HelloWorldModule {
      * @param command
      * @return
      */
+
+    //The method is abstract because just its declaration is enough to tell Dagger what to do.
+
     @Binds //helloWorldCommand(HelloWorldCommand command);
     abstract Command helloWorldCommand(HelloWorldCommand command);
 }

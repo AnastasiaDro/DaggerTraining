@@ -21,7 +21,7 @@ final class CommandRouter {
     @Inject
     CommandRouter(Command command) {
         System.out.println("Настя в CommandRouter()");
-        commands.put(helloWorldCommand.key(), helloWorldCommand);
+        commands.put(command.key(), command);
     }
 
     Command.Status route(String input) {

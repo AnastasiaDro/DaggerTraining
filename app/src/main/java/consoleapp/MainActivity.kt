@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         editText = findViewById(R.id.editTextCommand)
         button.setOnClickListener {
             commandRouter.route(editText.text.toString())
-            println("Настя в scan")
         }
     }
 
