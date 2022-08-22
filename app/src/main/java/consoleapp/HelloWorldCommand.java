@@ -9,10 +9,10 @@ final class HelloWorldCommand implements Command {
     @Inject
     HelloWorldCommand() {}
 
-    @Override
-    public String key() {
-        return "hello";
-    }
+//    @Override
+//    public String key() {
+//        return "hello";
+//    }
 
     @Override
     public Status handleInput(List<String> input) {

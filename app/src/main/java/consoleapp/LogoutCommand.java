@@ -8,9 +8,9 @@ public class LogoutCommand extends SingleArgCommand{
     @Inject
     LogoutCommand(Outputter outputter) { this.outputter = outputter;}
 
-
-    @Override
-    public String key() { return "logout"; }
+//
+//    @Override
+//    public String key() { return "logout"; }
 
     @Override
     protected Status handleArg(String username) {

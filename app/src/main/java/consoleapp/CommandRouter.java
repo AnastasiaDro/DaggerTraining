@@ -16,12 +16,21 @@ final class CommandRouter {
      * we also need to add an @Inject annotation to its constructor:
      * Dagger also will create instanse of HelloWorldCommand
      */
-    private final Map<String, Command> commands =  new HashMap<>();
+
+    /**
+     * To take advantage of this, we can switch CommandRouter’s constructor
+     * parameter to Map<String, Command>.
+     * Notice that Command on its own won’t work anymore.
+     */
+    private final Map<String, Command> commands;
 
     @Inject
-    CommandRouter(Command command) {
+    CommandRouter(Map<String, Command> commands) {
+        // This map contains:
+        // "hello" -> HelloWorldCommand
+        // "login" -> LoginCommand
         System.out.println("Настя в CommandRouter()");
-        commands.put(command.key(), command);
+       this.commands = commands;
     }
 
     Command.Status route(String input) {

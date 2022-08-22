@@ -10,10 +10,10 @@ final class LoginCommand extends SingleArgCommand {
         this.outputter = outputter;
     }
 
-    @Override
-    public String key() {
-        return "login";
-    }
+//    @Override
+//    public String key() {
+//        return "login";
+//    }
 
     @Override
     public Command.Status handleArg(String username) {
