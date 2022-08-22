@@ -15,7 +15,7 @@ import dagger.Component;
  * Говоря проще, эта аннотация сама генерит за нас фабрику CommandRouter-ов
  * и эта фабрика может возвращать инстанс этой фабрики
  */
-@Component(modules = {LoginCommandModule.class, SystemOutModule.class})
+@Component(modules = {LogoutCommandModule.class, SystemOutModule.class})
 interface CommandRouterFactory {
     CommandRouter router();
 }

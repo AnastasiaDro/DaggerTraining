@@ -1,7 +1,5 @@
 package consoleapp;
 
-import androidx.core.util.LogWriter;
-
 import javax.inject.Inject;
 
 final class LoginCommand extends SingleArgCommand {
