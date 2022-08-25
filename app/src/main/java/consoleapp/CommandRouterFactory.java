@@ -1,5 +1,7 @@
 package consoleapp;
 
+import javax.inject.Singleton;
+
 import dagger.Component;
 
 //Component is a feature for creating instances
@@ -15,7 +17,8 @@ import dagger.Component;
  * Говоря проще, эта аннотация сама генерит за нас фабрику CommandRouter-ов
  * и эта фабрика может возвращать инстанс этой фабрики
  */
-@Component(modules = {HelloWorldModule.class, LoginCommandModule.class, LogoutCommandModule.class, SystemOutModule.class})
+@Singleton
+@Component(modules = {HelloWorldModule.class, LoginCommandModule.class, LogoutCommandModule.class, SystemOutModule.class, UserCommandsModule.class})
 interface CommandRouterFactory {
     CommandRouter router();
 }
