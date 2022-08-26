@@ -1,8 +1,6 @@
 package consoleapp;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,17 +21,18 @@ final class CommandRouter {
      * Notice that Command on its own won’t work anymore.
      */
     private final Map<String, Command> commands;
-
+    private final Outputter outputter;
     @Inject
-    CommandRouter(Map<String, Command> commands) {
-        // This map contains:
-        // "hello" -> HelloWorldCommand
-        // "login" -> LoginCommand
-        System.out.println("Настя в CommandRouter()");
-       this.commands = commands;
+    CommandRouter(Map<String, Command> commands, Outputter outputter) {
+        this.commands = commands;
+        this.outputter = outputter;
     }
 
-    Command.Status route(String input) {
+    /**
+     * Calls {@link Command#handleInput(String) command.handleInput(input)} on this router's
+     * {@linkplain #commands commands}.
+     */
+    Command.Result route(String input) {
         List<String> splitInput = split(input);
         if (splitInput.isEmpty()) {
             return invalidCommand(input);
@@ -45,20 +44,17 @@ final class CommandRouter {
             return invalidCommand(input);
         }
 
-        Command.Status status =
-                command.handleInput(splitInput.subList(1, splitInput.size()));
-        if (status == Command.Status.INVALID) {
-            System.out.println(commandKey + ": invalid arguments");
-        }
-        return status;
+        List<String> args = splitInput.subList(1, splitInput.size());
+        Command.Result result = command.handleInput(args);
+        return result.status().equals(Command.Status.INVALID) ? invalidCommand(input) : result;
     }
 
-    private Command.Status invalidCommand(String input) {
-        System.out.println(
-                String.format("couldn't understand \"%s\". please try again.", input));
-        return Command.Status.INVALID;
+    private Command.Result invalidCommand(String input) {
+        outputter.output(String.format("couldn't understand \"%s\". please try again.", input));
+        return Command.Result.invalid();
     }
 
-    // Split on whitespace
-    private static List<String> split(String input) {  return Arrays.asList(input.trim().split("\\s+"));  }
+    private static List<String> split(String input) {
+        return Arrays.asList(input.trim().split("\\s+"));
+    }
 }

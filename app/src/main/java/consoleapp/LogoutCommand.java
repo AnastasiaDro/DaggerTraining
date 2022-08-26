@@ -13,7 +13,7 @@ public class LogoutCommand extends SingleArgCommand{
 //    public String key() { return "logout"; }
 
     @Override
-    protected Status handleArg(String username) {
+    protected Result handleArg(String username) {
         outputter.output(username + " logged out.");
         return Status.HANDLED;
     }

@@ -1,6 +1,7 @@
 package consoleapp;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface Command {
     /**
@@ -10,10 +11,53 @@ public interface Command {
   //  String key();
 
     /** Process the rest of the command's words and do something. */
-    Status handleInput(List<String> input);
+    Result handleInput(List<String> input);
+
+    final class Result {
+        private final Status status;
+        private final Optional<CommandRouter> nestedCommandRouter;
+
+        private Result(Status status, Optional<CommandRouter> nestedCommandRouter) {
+            this.status = status;
+            this.nestedCommandRouter = nestedCommandRouter;
+        }
+
+        static Result invalid() {
+            return new Result(Status.INVALID, Optional.empty());
+        }
+
+        static Result handled() {
+            return new Result(Status.HANDLED, Optional.empty());
+        }
+
+        static Result inputCompleted() {
+            return new Result(Status.INPUT_COMPLETED, Optional.empty());
+        }
+
+        static Result enterNestedCommandSet(CommandRouter nestedCommandRouter) {
+            return new Result(Status.HANDLED, Optional.of(nestedCommandRouter));
+        }
+
+        Status status() {
+            return status;
+        }
+
+        Optional<CommandRouter> nestedCommandRouter() {
+            return nestedCommandRouter;
+        }
+    }
 
     enum Status {
+        /** The command or its arguments were invalid. */
         INVALID,
-        HANDLED
+
+        /** The command handled the input and no other commands should attempt to handle it. */
+        HANDLED,
+
+        // TODO(ronshapiro): maybe call this TERMINATED? If so, maybe this should be called
+        // ContinueStatus?
+        /** The command handled the input and no further inputs should be submitted. */
+        INPUT_COMPLETED,
+        ;
     }
 }

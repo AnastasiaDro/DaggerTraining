@@ -18,7 +18,8 @@ import dagger.Component;
  * и эта фабрика может возвращать инстанс этой фабрики
  */
 @Singleton
-@Component(modules = {HelloWorldModule.class, LoginCommandModule.class, LogoutCommandModule.class, SystemOutModule.class, UserCommandsModule.class})
-interface CommandRouterFactory {
-    CommandRouter router();
+@Component(modules = {HelloWorldModule.class, LoginCommandModule.class, LogoutCommandModule.class, SystemOutModule.class,
+        UserCommandsRouter.InstallationModule.class })
+interface CommandProcessorFactory {
+    CommandProcessor processor();
 }

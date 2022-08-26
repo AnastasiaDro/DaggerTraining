@@ -1,27 +1,26 @@
 package consoleapp;
 
+import android.accounts.Account;
+
 import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class DepositCommand implements Command {
-    private final Database database;
+final class DepositCommand extends BigDecimalCommand  {
+    private final Database.Account account;
     private final Outputter outputter;
 
     @Inject
-    DepositCommand(Database database, Outputter outputter) {
-        this.database = database;
+    DepositCommand(Database.Account account, Outputter outputter) {
+        super(outputter);
+        this.account = account;
         this.outputter = outputter;
     }
 
     @Override
-    public Status handleInput(List<String> input) {
-        if (input.size() != 2)
-            return Status.INVALID;
-        Database.Account account = database.getAccount(input.get(0));
-        account.deposit(new BigDecimal(input.get(1)));
+    public void handleAmount(BigDecimal amount) {
+        account.deposit(amount);
         outputter.output(account.username() + " now has: " + account.balance());
-        return Status.HANDLED;
     }
 }
